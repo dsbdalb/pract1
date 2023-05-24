@@ -1,0 +1,52 @@
+# Import Pandas library
+import pandas as pd
+
+# Create a dictionary with data
+data = {"Name": ["Rajeev", "Sakshi", "Murti", "Rohini", "Pranita", "Shivam", "Sayali"],
+        "Marks": [12, 13, 41, "NaN", 45, "NaN", 18],
+        "Gender": ["M", "F", "M", "F", "F", "M", "F"],
+        "Branch": ["CSE", "MEC", "CSE", "CSE", "MEC", "MEC", "CSE"]}
+
+# Create a DataFrame from the data
+a = pd.DataFrame(data)
+
+# Replace "NaN" values with 5
+a = a.replace(to_replace="NaN", value=5)
+
+# Initialize variables for counting and summing
+c = avg = 0
+
+# Calculate the average of numeric values in the "Marks" column
+for ele in a["Marks"]:
+    if str(ele).isnumeric():
+        c += 1
+        avg += ele
+avg /= c
+
+# Map "M" and "F" values in the "Gender" column to 0 and 1 respectively
+a["Gender"] = a["Gender"].map({"M": 0, "F": 1})
+
+# Filter rows where "Marks" is greater than 13
+a["Marks"] = a[a["Marks"] > 13]
+
+# Drop the "Gender" column from DataFrame "a"
+a = a.drop(["Gender"], axis=1)
+
+# Create another dictionary with data
+Fees_Data = {"Name": ["Rajeev", "Sakshi", "Murti", "Rohini"],
+             "Fees": ["Nill", "Pending", "Nill", "Pending"]}
+
+# Create another DataFrame from the Fees_Data
+b = pd.DataFrame(Fees_Data)
+
+# Merge DataFrames "a" and "b" on the "Name" column
+c = pd.merge(a, b, on="Name")
+
+# Group DataFrame "a" by "Branch"
+d = a.groupby("Branch")
+
+# Get the group with "CSE" branch from DataFrame "d"
+d.get_group("CSE")
+
+# Filter the DataFrame "a" to remove duplicate rows based on "Branch" column
+Non_Dup = a[~a.duplicated("Branch")]

@@ -1,0 +1,59 @@
+import pandas as pd
+import numpy as np
+from sklearn.datasets import fetch_california_housing
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+import matplotlib.pyplot as plt
+
+# Load the California Housing dataset
+california_housing = fetch_california_housing()
+
+# Create a DataFrame with the feature variables
+df = pd.DataFrame(california_housing.data, columns=california_housing.feature_names)
+
+# Print the 'PRICE' column
+print(df["PRICE"])  # Access and print the 'PRICE' column
+print(df['PRICE'])
+
+# Separate the feature variables (X) and the target variable (y)
+X = df.drop('PRICE', axis=1)  # Drop the 'PRICE' column and assign the remaining columns to X
+y = df['PRICE']  # Assign the 'PRICE' column to y
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Initialize the Linear Regression model
+model = LinearRegression()
+
+# Train the model
+model.fit(X_train, y_train)
+
+# Make predictions on the test set
+y_pred = model.predict(X_test)
+
+# Calculate the mean squared error (MSE)
+mse = mean_squared_error(y_test, y_pred)
+
+# Print the mean squared error
+print("Mean Squared Error (MSE):", mse)
+
+# Plot the histogram of actual and predicted prices
+plt.hist(y_test, bins=30, alpha=0.5, color='blue', label='Actual Prices')
+plt.hist(y_pred, bins=30, alpha=0.5, color='green', label='Predicted Prices')
+plt.xlabel('Price')
+plt.ylabel('Frequency')
+plt.title('Histogram of Actual and Predicted Prices')
+plt.legend()
+plt.show()
+
+"""
+Regression: 
+Regression searches for relationships among variables.
+For example, you can observe several employees of some company and try to understand how 
+their salaries depend on the features, such as experience, level of education, role, city they work 
+in,estimate the functional relationship between the independent variables (also known as predictors) and the dependent variable (also known as or target variable). The independent variables are used to predict or explain the value of the dependent variable.
+
+The MSE is computed by calculating the average of the squared differences between each predicted value and its corresponding actual value. The squared differences are summed up and divided by the total number of data points. The resulting value represents the average squared error between the predicted and actual values.
+
+A lower MSE indicates better performance of the regression model, as it signifies that the predicted values are closer to the actual values. Conversely, a higher MSE implies larger prediction errors."""

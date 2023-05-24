@@ -1,0 +1,71 @@
+import seaborn as sns
+
+dataset = sns.load_dataset("titanic")
+
+dataset.head()
+
+sns.histplot(dataset["fare"])#used to draw Histogram
+
+sns.jointplot(x="age",y="fare",data=dataset)#display the mutual distribution of each column.
+
+sns.pairplot(dataset)#a joint plot for all the possible
+combinations
+
+sns.rugplot(dataset["fare"])#used to draw small bars along x-axis for each point in the dataset.
+
+sns.barplot(x="sex",y="age",data=dataset)#display the mean value for each value in a categorical column,
+
+sns.countplot(x="sex",data=dataset)#it displays the count of the categories in a
+specific column.
+
+sns.boxplot(x="sex",y="age",data=dataset,hue="survived")#display the distribution of the categorical data in the form of quartiles.
+# Import seaborn library
+import seaborn as sns
+
+# Load the Titanic dataset from seaborn
+dataset = sns.load_dataset("titanic")
+
+# Display the first few rows of the dataset
+dataset.head()
+
+# Draw a histogram of the "fare" column
+sns.histplot(dataset["fare"])  # Used to draw a Histogram
+
+# Display a joint plot of "age" and "fare" columns
+sns.jointplot(x="age", y="fare", data=dataset)  # Display the mutual distribution of each column.
+
+# Create a joint plot for all possible combinations of numeric columns
+sns.pairplot(dataset)  # A joint plot for all possible combinations
+
+# Draw a rug plot of the "fare" column
+sns.rugplot(dataset["fare"])  # Used to draw small bars along the x-axis for each point in the dataset.
+
+# Display a bar plot showing the mean value of "age" for each value in the "sex" column
+sns.barplot(x="sex", y="age", data=dataset)  # Display the mean value for each value in a categorical column.
+
+# Display a count plot of the "sex" column
+sns.countplot(x="sex", data=dataset)  # It displays the count of the categories in a specific column.
+
+# Display a box plot showing the distribution of "age" for each category in the "sex" column,
+# with the "survived" column as a hue
+sns.boxplot(x="sex", y="age", data=dataset, hue="survived")  # Display the distribution of the categorical data in the form of quartiles.
+
+# Display a violin plot showing the distribution of "age" for each category in the "sex" column,
+# with the "survived" column as a hue
+sns.violinplot(x="sex", y="age", data=dataset, hue="survived")  # Display all the components that actually correspond to the data point.
+
+# Draw a scatter plot of "age" and "sex" columns
+sns.stripplot(x="sex", y="age", data=dataset)  # Draws a Scatter Plot
+
+# Draw a combination of strip plot and violin plot for "age" and "sex" columns
+sns.swarmplot(x="sex", y="age", data=dataset)  # Combination of the strip and the violin plots.
+
+sns.violinplot(x="sex",y="age",data=dataset,hue="survived")#display all the
+components that actually correspond to the data point.
+
+sns.stripplot(x="sex",y="age",data=dataset)#Draws Scatter Plot
+
+sns.swarmplot(x="sex",y="age",data=dataset)#combination of the strip and the violin plots.
+
+
+

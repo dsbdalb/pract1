@@ -1,0 +1,84 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+dataset = pd.read_csv('Social_Network_Ads.csv')
+dataset.head()
+#only worried about how the users' Age and Estimated Salary affect their decision to click or not click on the advertisement.
+
+x = dataset.iloc[:, [2,3]].values
+y = dataset.iloc[:,4].values
+
+
+print(x[:3])
+print('-'*15)
+print(y[:3])
+
+#We now need to split our data into two sets: a training set for the machine to learn from, as well as a test set for the machine to execute on. This process is referred to as Cross Validation and we will be implementing SciKit Learn's appropriately named 'train_test_split' class to make it happen. Industry standard usually calls for a training set size of 70-80% so we'll split the two.
+
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size = 0.25, random_state = 0)
+
+print(X_train[:3])
+print('-'*15)
+print(y_train[:3])
+print('-'*15)
+print(X_test[:3])
+print('-'*15)
+print(y_test[:3])
+
+#To get the most accurate results, a common tool within machine learning models is to apply Feature Scaling: "...a method used to standardize the range of independent variables or features of data. In data processing, it is also known as data normalization and is generally performed during the data preprocessing step."
+
+from sklearn.preprocessing import StandardScaler # Scale the feature variables using StandardScaler
+sc_X = StandardScaler()
+X_train = sc_X.fit_transform(X_train)
+X_test = sc_X.transform(X_test)
+
+print(X_train[:3])
+print('-'*15)
+print(X_test[:3])
+
+
+#Now we are ready to build our Logistic Regression Model. We create an object of the LogisticRegression() class and refer to it as our 'classifier' for obvious reasons. The random state variable simply allows us to all get the same outcome but can be changed to alter the results slightly. We then fit the classifier to the training set with the aptly named .fit() method so that it can understand the correlations between X and y. Lastly, we will test the classifier's predictive power on the test set. The Logistic Regression's .predict() method will give us a vector of predictions for our dataset, X_test.
+
+from sklearn.linear_model import LogisticRegression
+classifier = LogisticRegression(random_state = 0, solver='lbfgs' )
+classifier.fit(X_train, y_train)
+y_pred = classifier.predict(X_test)
+
+print(X_test[:10])
+print('-'*15)
+print(y_pred[:10])
+
+#eighth and tenth individuals within the index are predicted to click on the advertisement
+print(y_pred[:20])
+print(y_test[:20])
+
+from sklearn.metrics import confusion_matrix
+cm = confusion_matrix(y_test, y_pred)
+print(cm)
+
+
+#Logistic regression is a statistical method for predicting binary classes. The outcome or target 
+variable is dichotomous in nature. Dichotomous means there are only two possible classes. For 
+example, it can be used for cancer detection problems. It computes the probability of an event 
+occurring.
+It is a special case of linear regression where the target variable is categorical in nature. It uses a 
+log of odds as the dependent variable. Logistic Regression predicts the probability of occurrence 
+of a binary event utilizing a logit function.
+
+
+#A confusion matrix is a performance measurement technique for Machine learning classification
+
+● TP: True Positive: Predicted values correctly predicted as actual positive
+● FP: Predicted values incorrectly predicted an actual positive. i.e., Negative values 
+predicted as positive
+● FN: False Negative: Positive values predicted as negative
+● TN: True Negative: Predicted values correctly predicted as an actual negative
+
+ACCURACY = TP+TN/TP+TN+FP+FN
+#top-left and bottom-right quadrants will tell us how many predictions were correct - while the other two values indicate how many were in correct. We can divide the summation of those first two numbers by the total number of samples to give us a percentage of accuracy.
+
+
+#It's important to note that logistic regression assumes a linear relationship between the input features and the log-odds of the target variable. 
+

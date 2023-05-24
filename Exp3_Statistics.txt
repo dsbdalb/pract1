@@ -1,0 +1,64 @@
+import pandas as pd
+import numpy as np
+
+# Read the dataset from the CSV file
+data = pd.read_csv("dataset.csv")
+
+# Display the first few rows of the dataset
+data.head()
+
+# Get the shape of the dataset (number of rows and columns)
+data.shape
+
+# Calculate the mean of each column (axis=0)
+data.mean(axis=0)[0:1]
+
+# Calculate the median of each column (axis=0)
+data.median(axis=0)
+
+# Calculate the mode of each column (axis=0)
+data.mode(axis=0)[0:3]
+
+# Calculate the mean of the 'ApplicantIncome' column
+data['ApplicantIncome'].mean()
+
+# Calculate the median of the 'ApplicantIncome' column
+data['ApplicantIncome'].median()
+
+# Calculate the minimum value of the 'ApplicantIncome' column
+data['ApplicantIncome'].min()
+
+# Calculate the maximum value of the 'ApplicantIncome' column
+data['ApplicantIncome'].max()
+
+# Calculate the standard deviation of the 'ApplicantIncome' column
+data['ApplicantIncome'].std()
+
+# Calculate the variance of the 'ApplicantIncome' column
+data['ApplicantIncome'].var()
+
+# Group the data by 'Gender' and count the occurrences
+data.groupby('Gender').count()
+
+# Group the data by 'Education' and sum the values
+data.groupby('Education').sum()
+
+# Calculate the interquartile range (IQR) of the 'ApplicantIncome' column
+q1 = np.median(data['ApplicantIncome'][len(data)//4])
+q3 = np.median(data['ApplicantIncome'][3*len(data)//4])
+iqr = q3 - q1
+iqr
+
+# Calculate the skewness of the dataset
+data.skew()
+
+# Calculate the interquartile range (IQR) using the scipy.stats.iqr function
+from scipy.stats import iqr
+print(iqr(data["ApplicantIncome"]))
+
+# Generate descriptive statistics for the dataset
+data.describe(include="all")
+
+# Select rows where 'Loan_ID' is equal to 'LP001002' and generate descriptive statistics
+selected = data["Loan_ID"]=="LP001002"
+data[selected].describe()

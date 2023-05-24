@@ -1,0 +1,17 @@
+import seaborn as sns
+import pandas as pd
+
+dataset = pd.read_csv("titanic.csv")
+
+dataset.head()
+
+sns.boxplot(x="sex",y="age",data=dataset)
+
+sns.boxplot(x="sex",y="age",data=dataset,hue="survived")
+#What is EDA?
+Exploratory Data Analysis (EDA) is a method used to analyze and summarize datasets. 
+Majority of the EDA techniques involve the use of graphs
+
+#Seaborn: It is a python library used to statistically visualize data. Seaborn, built over Matplotlib, 
+provides a better interface and ease of usage. It can be installed using the following 
+command,

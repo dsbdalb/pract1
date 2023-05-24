@@ -1,0 +1,58 @@
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score
+
+# Load the iris dataset
+data = pd.read_csv('iris.csv')
+
+# Separate features (X) and labels (y)
+X = data.drop('species', axis=1)
+y = data['species']
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Initialize the Naïve Bayes classifier
+nb_classifier = GaussianNB()
+
+# Train the classifier
+nb_classifier.fit(X_train, y_train)
+
+# Perform predictions on the test set
+y_pred = nb_classifier.predict(X_test)
+
+# Compute the confusion matrix
+confusion_mat = confusion_matrix(y_test, y_pred)
+
+# Extract the confusion matrix elements
+tn, fp, fn = confusion_mat[0, 0], confusion_mat[0, 1], confusion_mat[1, 0]
+tp = confusion_mat[1, 1] + confusion_mat[2, 2]
+
+# Compute performance metrics
+accuracy = accuracy_score(y_test, y_pred)
+error_rate = 1 - accuracy
+precision = precision_score(y_test, y_pred, average='macro')
+recall = recall_score(y_test, y_pred, average='macro')
+
+# Print the performance metrics and confusion matrix
+print("Confusion Matrix:")
+print(confusion_mat)
+print("Accuracy:", accuracy)
+print("Error Rate:", error_rate)
+print("Precision:", precision)
+print("Recall:", recall)
+
+
+#Naive Bayes models are a group of extremely fast and simple classification algorithms that 
+are often suitable for very high-dimensional datasets. 
+
+#When to Use Naive Bayes
+Because naive Bayesian classifiers make such stringent assumptions about data, they will 
+generally not perform as well as a more complicated model. That said, they have several 
+advantages:
+● They are extremely fast for both training and prediction
+● They provide straightforward probabilistic prediction
+● They are often very easily interpretable
+● They have very few (if any) tunable parameters
