@@ -1,35 +1,30 @@
-# Import the English module from Spacy
-from spacy.lang.en import English
+#Saperate1
+import nltk
+from nltk.tokenize import word_tokenize
 
-# Load English tokenizer, tagger, parser, NER and word vectors
-nlp = English()
+#Function to split text to word
+nltk.download('punkt')
 
-# Define a text to process
-text = """He determined to drop his litigation with the monastery, and relinquish his claims to the wood-cutting and 
-fishery rights at once. He was the more ready to do this because the rights had become much less valuable, and he had 
-indeed the vaguest idea where the wood and river in question were."""
+tokens = word_tokenize("The Quick Brown Fox Jumps Over The Lazy Dog")
 
-# Create a "nlp" object for linguistic annotations
-my_doc = nlp(text)
+nltk.download ('stopwords')
 
-# Create a list of word tokens
-token_list = []
-for token in my_doc:
-    token_list.append(token.text)
+print(tokens)
 
-# Import stopwords from Spacy
-from spacy.lang.en.stop_words import STOP_WORDS
+from nltk.corpus import stopwords
 
-# Create a list of word tokens after removing stopwords
-filtered_sentence = []
-for word in token_list:
-    lexeme = nlp.vocab[word]
-    if lexeme.is_stop == False:
-        filtered_sentence.append(word) 
+stop_words = set(stopwords.words("english"))
 
-# Print the original token list and the filtered sentence
-print(token_list)
-print("\n\n", filtered_sentence)
+tokens = [w for w in tokens if not w in stop_words]
+
+print(tokens)
+
+from nltk.stem.porter import PorterStemmer
+porter = PorterStemmer()
+stems = []
+for t in tokens:
+    stems.append(porter.stem(t))
+    print(stems)
 
 # Download necessary NLTK resources
 import nltk
